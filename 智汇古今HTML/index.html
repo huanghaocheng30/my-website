@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>智汇古今</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Microsoft YaHei', sans-serif;
+        }
+
+        /* 增强的导航栏样式 */
+        nav {
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            padding: 1rem 8%;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            color: #fff;
+            font-size: 2rem;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        /* 增强的主体内容 */
+        .main-content {
+            min-height: calc(100vh - 120px);
+            padding: 4rem 8%;
+            background: url('https://picsum.photos/1920/1080?grayscale') center/cover;
+            position: relative;
+            &::after {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                /* background: rgba(255,255,255,0.9); */
+            }
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 15px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+            text-align: center;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.2);
+        }
+
+        .card i {
+            font-size: 3.5rem;
+            color: #e67e22;
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .card h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: #2c3e50;
+        }
+
+        .card p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+
+        .card button {
+            background: #e67e22;
+            color: white;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        /* 增强的页脚 */
+        footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 1.2rem 0;
+            font-size: 0.9rem;
+            position: relative;
+            z-index: 2;
+        }
+               /* 新增装饰样式 */
+               .decorative-line {
+            height: 4px;
+            background: linear-gradient(90deg, #e67e22 0%, #2c3e50 100%);
+            margin: 3rem 0;
+            position: relative;
+        }
+
+        .decorative-line::after {
+            content: "✻";
+            position: absolute;
+            left: 50%;
+            top: -15px;
+            transform: translateX(-50%);
+            color: #e67e22;
+            background: white;
+            padding: 0 1rem;
+        }
+
+        /* 时间线组件 */
+        .timeline {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 4rem 0;
+        }
+
+        .timeline-item {
+            background: rgba(255,255,255,0.9);
+            padding: 1.5rem;
+            border-left: 4px solid #e67e22;
+            position: relative;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        }
+
+        .timeline-date {
+            color: #e67e22;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        /* 特色推荐 */
+        .featured-section {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .featured-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .featured-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .featured-image {
+            height: 200px;
+            background: #ddd;
+            position: relative;
+        }
+
+        .featured-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: #e67e22;
+            color: white;
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        /* 动态新闻 */
+        .news-ticker {
+            background: rgba(255,255,255,0.95);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+            position: relative;
+        }
+
+        .news-ticker::before {
+            content: "📢 最新动态";
+            position: absolute;
+            left: -15px;
+            top: 15px;
+            background: #2c3e50;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 5px 0 0 5px;
+        }
+
+        /* 保持导航链接为白色 */
+        .auth-links a {
+            color: white !important;
+            transition: opacity 0.3s;
+        }
+
+        .auth-links a:hover {
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="logo">智汇古今</div>
+        <div class="auth-links">
+            <a href="login.html">登录</a>
+            <span style="color: white">|</span>
+            <a href="register.html">注册</a>
+        </div>
+    </nav>
+
+    <div class="main-content">
+        <div class="features">
+            <!-- 线上社区板块 -->
+            <div class="card">
+                <i class="fas fa-comments"></i>
+                <h2>线上社区</h2>
+                <p>加入十万历史爱好者的交流社区<br>每日学术讨论 | 文物鉴赏直播<br>专家在线答疑 | 资源共享</p>
+                <a href="community1.html" class="button-link">
+                    <button>立即加入</button>
+                </a>
+            </div>
+
+            <!-- 沉浸体验板块 -->
+            <div class="card">
+                <i class="fas fa-vr-cardboard"></i>
+                <h2>沉浸体验</h2>
+                <p>4K超清历史场景复原<br>VR/AR双模式支持<br>多人在线互动体验<br>定期更新场景库</p>
+                <button>开始体验</button>
+            </div>
+
+            <!-- 3D模型板块 -->
+            <div class="card">
+                <i class="fas fa-cubes"></i>
+                <h2>3D模型</h2>
+                <p>百万级文物数字模型库<br>支持360°旋转查看<br>毫米级精度测量工具<br>在线3D打印服务</p>
+                <button>查看藏品</button>
+            </div>
+        </div>
+    </div>
+    <div class="main-content">
+        <!-- 新增装饰性分隔线 -->
+        <div class="decorative-line"></div>
+
+        <div class="features">
+            <!-- 原有三大板块保持不变 -->
+        </div>
+
+        <!-- 新增时间线 -->
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-date">2023.09.15</div>
+                <h3>青铜器数字展上线</h3>
+                <p>全新3D扫描技术呈现商周青铜器细节</p>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-date">2023.10.01</div>
+                <h3>VR紫禁城开放</h3>
+                <p>沉浸式体验明清皇宫建筑群</p>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-date">2023.11.12</div>
+                <h3>丝绸之路特展</h3>
+                <p>数字还原古代贸易路线与文物</p>
+            </div>
+        </div>
+
+        <!-- 新增特色推荐 -->
+        <div class="featured-section">
+            <div class="featured-card">
+                <div class="featured-image">
+                    <div class="featured-badge">热门推荐</div>
+                    <img src="大明宫.png" alt="" width="700" height="200">
+                </div>
+                <div class="content">
+                    <h3>大明宫数字复原</h3>
+                    <p>体验盛唐气象，见证万国来朝盛景</p>
+                </div>
+            </div>
+            <div class="featured-card">
+                <div class="featured-image">
+                    <div class="featured-badge">限时免费</div>
+                    <img src="敦煌.jpg" alt="" width="700" height="200">
+                </div>
+                <div class="content">
+                    <h3>敦煌壁画AR解读</h3>
+                    <p>扫描二维码即可激活增强现实功能</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 新增动态新闻 -->
+        <div class="news-ticker">
+            <ul>
+                <li>📅 下周将推出「数字考古」系列直播</li>
+                <li>🎉 注册用户突破50万纪念活动进行中</li>
+                <li>🔔 新增秦俑坑3D扫描数据开放下载</li>
+            </ul>
+        </div>
+    </div>
+    <footer>
+        找我们，来定制！<br>
+        <small>©2023 智汇古今 保留所有权利</small><br>
+        <small>电话：15023665523</small>
+    </footer>
+</body>
+</html>
